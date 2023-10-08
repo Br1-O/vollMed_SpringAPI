@@ -8,28 +8,28 @@ import jakarta.validation.constraints.Pattern;
 import med.voll.api.model.domain.Speciality;
 
 public record dtoDoctor_createData(
-        @NotBlank(message = "This field cannot be empty!")
-        @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only letters are valid!")
+        @NotBlank(message = "¡Este campo no puede estar vacio!")
+        @Pattern(regexp = "^[a-zA-Z ]+$", message = "¡Sólo se aceptan letras!")
         String name,
 
-        @NotBlank(message = "This field cannot be empty!")
-        @Pattern(regexp = "^[a-zA-Z ]+$", message = "Only letters are valid!")
+        @NotBlank(message = "¡Este campo no puede estar vacio!")
+        @Pattern(regexp = "^[a-zA-Z ]+$", message = "¡Sólo se aceptan letras!")
         String lastName,
-        @NotBlank(message = "This field cannot be empty!")
-        @Pattern(regexp = "^[0-9]{8,50}+$", message = "NUMBERS are required!")
+        @NotBlank(message = "¡Este campo no puede estar vacio!")
+        @Pattern(regexp = "^[0-9]{8,50}+$", message = "¡Sólo se aceptan caracteres numéricos!")
         String phone,
-        @NotBlank(message = "This field cannot be empty!")
-        @Email(message = "Not a valid email!")
+        @NotBlank(message = "¡Este campo no puede estar vacio!")
+        @Email(message = "¡No es un email válido!")
         String email,
-        @NotBlank(message = "This field cannot be empty!")
-        @Pattern(regexp = "^[0-9]{8,10}+$", message = "8-10 NUMBERS are required!")
+        @NotBlank(message = "¡Este campo no puede estar vacio!")
+        @Pattern(regexp = "^[0-9]{8,10}+$", message = "¡8-10 números son requeridos!")
         String dni,
-        @NotNull(message = "This field cannot be empty!")
+        @NotNull(message = "¡Este campo no puede estar vacio!")
         Speciality speciality,
-        @NotBlank(message = "This field cannot be empty!")
-        @Pattern(regexp = "^[0-9]{8,50}+$", message = "NUMBERS are required!")
+        @NotBlank(message = "¡Este campo no puede estar vacio!")
+        @Pattern(regexp = "^[0-9]{8,50}+$", message = "¡Sólo se aceptan caracteres numéricos!")
         String licenseNumber,
-        @NotNull(message = "This field cannot be empty!")
+        @NotNull(message = "¡Este campo no puede estar vacio!")
         @Valid
         dtoAddress address) {
 

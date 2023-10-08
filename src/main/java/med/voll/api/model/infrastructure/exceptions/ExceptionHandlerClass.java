@@ -1,4 +1,4 @@
-package med.voll.api.model.infra;
+package med.voll.api.model.infrastructure.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;

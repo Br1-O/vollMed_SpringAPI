@@ -1,16 +1,15 @@
 package med.voll.api.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import med.voll.api.model.infrastructure.security.JWT_tokenService;
+import med.voll.api.model.infrastructure.security.dto_JWTtoken;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.model.domain.User;
 import med.voll.api.model.dto.request.dtoUser_createData;
 import med.voll.api.model.dto.response.dtoUser_dataDisplay;
 import med.voll.api.model.repositories.IUserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,24 +29,23 @@ import java.net.URI;
 public class userController {
 
     //dependency injection via constructor
-    private final IUserRepository userRepository;
-    private AuthenticationManager authenticationManager;
-
-    public userController(IUserRepository userRepository, AuthenticationManager authenticationManager ) {
-        this.userRepository = userRepository;
-        this.authenticationManager = authenticationManager;
-    }
+        private final IUserRepository userRepository;
+        private AuthenticationManager authenticationManager;
+        private JWT_tokenService jwt_tokenService;
+        public userController(IUserRepository userRepository, AuthenticationManager authenticationManager, JWT_tokenService jwt_tokenService) {
+            this.userRepository = userRepository;
+            this.authenticationManager = authenticationManager;
+            this.jwt_tokenService = jwt_tokenService;
+        }
 
     //LOGIN Auth method
-
-    @PostMapping("/login")
-    public ResponseEntity loginAuth(@RequestBody @Valid dtoUser_createData dtoUser_createData){
-        Authentication token = new UsernamePasswordAuthenticationToken(dtoUser_createData.username(), dtoUser_createData.password());
-        authenticationManager.authenticate(token);
-        return ResponseEntity.ok().build();
-    }
-
-
+        @PostMapping("/login")
+        public ResponseEntity loginAuth(@RequestBody @Valid dtoUser_createData dtoUser_createData){
+            Authentication authToken = new UsernamePasswordAuthenticationToken(dtoUser_createData.username(), dtoUser_createData.password());
+            var authUser= authenticationManager.authenticate(authToken);
+            var JWTtoken = jwt_tokenService.generateJWT((User) authUser.getPrincipal());
+            return ResponseEntity.ok(new dto_JWTtoken(JWTtoken));
+        }
 
     //CREATE method
         @PostMapping("/registrar")
